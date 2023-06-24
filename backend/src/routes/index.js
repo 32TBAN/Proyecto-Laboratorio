@@ -1,7 +1,7 @@
 const { Router } = require("express"); //solo de la libreria express necistamos routeer par las rutas
 const router = Router();
 
-const faker = require("faker"); //genera datos falsos para ejemplo
+//const faker = require("faker"); //genera datos falsos para ejemplo
 const Paciente = require("../models/Paciente");
 
 router.post("/create", async (req, res) => {
@@ -12,6 +12,11 @@ router.post("/create", async (req, res) => {
 
 router.get("/paciente", async (req, res) => {
   const pacientes = await Paciente.find();
+  res.json(pacientes);
+});
+
+router.get("/buscarPaciente/:id", async (req, res) => {
+  const pacientes = await Paciente.findById(req.params.id);
   res.json(pacientes);
 });
 

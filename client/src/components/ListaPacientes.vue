@@ -5,12 +5,12 @@
         <div class="col-md-4" v-for="paciente in pacientes" :key="paciente._id">
           <div class="card mb-2">
             <div class="card-body">
-              <h5>Cedula: {{ paciente.Cedula }}</h5>
-              <p>Nombre:  {{ paciente.Nombre }}</p>
+              <h5>Cedula: {{ paciente._id }}</h5>
+              <p>Nombre: {{ paciente.Nombre }}</p>
               <p>Apellido {{ paciente.Apellido }}</p>
               <p>Genero: {{ paciente.Genero }}</p>
               <p>Fecha de Nacimiento: {{ paciente.FechaNac }}</p>
-              <br>
+              <br />
             </div>
           </div>
         </div>

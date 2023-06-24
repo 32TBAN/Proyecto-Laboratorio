@@ -4,7 +4,14 @@
 
     <form @submit.prevent="registrar">
       <label for="cedula">Cedula:</label>
-      <input type="text" id="cedula" v-model="cedula" maxlength="10" required />
+      <input
+        type="text"
+        id="cedula"
+        v-model="cedula"
+        maxlength="10"
+        required
+        @input="existe"
+      />
 
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" v-model="nombre" required />
@@ -48,19 +55,20 @@ export default {
       apellido: "",
       genero: "",
       edad: "",
+      baseURL: "http://localhost:3000",
     };
   },
   methods: {
     registrar() {
       const paciente = {
-        Cedula: this.cedula,
+        _id: this.cedula,
         Nombre: this.nombre,
         Apellido: this.apellido,
         Genero: this.genero,
         FechaNac: this.edad,
       };
 
-      fetch("http://localhost:3000/create", {
+      fetch(`${this.baseURL}/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,6 +90,20 @@ export default {
       this.edad = "";
       this.edad = null;
       this.examen = "";
+    },
+    existe() {
+      fetch(`${this.baseURL}/buscarPaciente/${this.cedula}`)
+        .then((res) => res.json())
+        .then((pacienteX) => {
+          this.cedula = pacienteX._id;
+          this.nombre = pacienteX.Nombre;
+          this.apellido = pacienteX.Apellido;
+          this.genero = pacienteX.Genero;
+          this.edad = pacienteX.FechaNac;
+        })
+        .catch((error) => {
+          console.error("Error al encontrar el paciente:", error);
+        });
     },
   },
 };

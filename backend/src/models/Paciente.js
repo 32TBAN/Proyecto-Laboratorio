@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const paciente = new Schema({
-  Cedula: String,
+  _id: String,
   Nombre: String,
   Apellido: String,
   Genero: String,
