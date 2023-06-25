@@ -23,7 +23,7 @@ pnpm-debug.log*
 
 
 git add .
-git commit -m "version 0.0.3"
+git commit -m "version 0.0.4"
 git push -u origin main 
 
 

@@ -55,7 +55,9 @@ export default {
       apellido: "",
       genero: "",
       edad: "",
+      examen: "",
       baseURL: "http://localhost:3000",
+      siExiste: false,
     };
   },
   methods: {
@@ -68,42 +70,87 @@ export default {
         FechaNac: this.edad,
       };
 
-      fetch(`${this.baseURL}/create`, {
+      var hoy = new Date();
+      const examen = {
+        CedulaPaciente: this.cedula,
+        Revisado: false,
+        FechaInicio: hoy,
+      };
+
+      if (!this.siExiste) {
+        fetch(`${this.baseURL}/crearPaciente`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(paciente),
+        })
+          .then((res) => res.json())
+          .then((nuevoPaciente) => {
+            // Aquí puedes realizar alguna acción con la respuesta del backend
+            console.log("Nuevo paciente creado:", nuevoPaciente);
+          })
+          .catch((error) => {
+            console.error("Error al crear el paciente:", error);
+          });
+      }
+
+      fetch(`${this.baseURL}/crearExamen`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(paciente),
+        body: JSON.stringify(examen),
       })
         .then((res) => res.json())
-        .then((nuevoPaciente) => {
+        .then((nuevoExamen) => {
           // Aquí puedes realizar alguna acción con la respuesta del backend
-          console.log("Nuevo paciente creado:", nuevoPaciente);
+          console.log("Nuevo examen creado:", nuevoExamen);
         })
         .catch((error) => {
-          console.error("Error al crear el paciente:", error);
+          console.error("Error al crear el examen:", error);
         });
 
       this.cedula = "";
       this.apellido = "";
       this.genero = "";
       this.edad = "";
-      this.edad = null;
       this.examen = "";
     },
     existe() {
-      fetch(`${this.baseURL}/buscarPaciente/${this.cedula}`)
-        .then((res) => res.json())
-        .then((pacienteX) => {
-          this.cedula = pacienteX._id;
-          this.nombre = pacienteX.Nombre;
-          this.apellido = pacienteX.Apellido;
-          this.genero = pacienteX.Genero;
-          this.edad = pacienteX.FechaNac;
-        })
-        .catch((error) => {
-          console.error("Error al encontrar el paciente:", error);
-        });
+      if (this.cedula != "") {
+        if (this.siExiste) {
+          this.nombre = "";
+          this.apellido = "";
+          this.genero = " ";
+          this.edad = "";
+          this.examen = " ";
+          this.siExiste = false;
+        }
+
+        fetch(`${this.baseURL}/buscarPaciente/${this.cedula}`)
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              throw new Error("Error en la respuesta del servidor");
+            }
+          })
+          .then((pacienteX) => {
+            if (pacienteX != null) {
+              this.nombre = pacienteX.Nombre;
+              this.apellido = pacienteX.Apellido;
+              this.genero = pacienteX.Genero;
+              this.edad = new Date(pacienteX.FechaNac)
+                .toISOString()
+                .substr(0, 10);
+              this.siExiste = true;
+            }
+          })
+          .catch((error) => {
+            console.error("Error al encontrar el paciente:", error);
+          });
+      }
     },
   },
 };
