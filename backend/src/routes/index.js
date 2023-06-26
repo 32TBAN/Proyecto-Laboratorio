@@ -21,6 +21,11 @@ router.get("/paciente", async (req, res) => {
   res.json(pacientes);
 });
 
+router.get("/examenes", async (req, res) => {
+  const examens = await Examen.find();
+  res.json(examens);
+});
+
 router.get("/buscarPaciente/:id", async (req, res) => {
   try {
     const pacientes = await Paciente.findById(req.params.id);

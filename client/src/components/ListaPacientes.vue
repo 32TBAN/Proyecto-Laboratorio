@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     obtenerPacientes() {
-      fetch(`${this.baseURL}/Paciente`)
+      fetch(`${this.baseURL}/paciente`)
         .then((res) => res.json())
         .then((data) => (this.pacientes = data));
     },

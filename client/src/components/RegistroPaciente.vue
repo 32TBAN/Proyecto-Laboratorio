@@ -10,14 +10,15 @@
         v-model="cedula"
         maxlength="10"
         required
+        placeholder="Ingrese una cedula"
         @input="existe"
       />
 
       <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" v-model="nombre" required />
+      <input type="text" id="nombre" v-model="nombre" placeholder="Ingrese un nombre" required />
 
       <label for="apellido">Apellido:</label>
-      <input type="text" id="apellido" v-model="apellido" required />
+      <input type="text" id="apellido" v-model="apellido" placeholder="Ingrese un apellido" required />
 
       <label for="genero">Genero:</label>
       <select id="genero" v-model="genero" required>
