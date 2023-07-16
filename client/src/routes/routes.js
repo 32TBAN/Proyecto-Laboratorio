@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import DashboardLayout from "../layout/DashboardLayout.vue";
 // GeneralViews
 import NotFound from "../pages/NotFoundPage.vue";
@@ -11,10 +12,14 @@ import Icons from "../pages/IconsPage.vue";
 import Maps from "../pages/MapsPage.vue";
 import Notifications from "../pages/NotificationsPage.vue";
 import Upgrade from "../pages/UpgradePage.vue";
+=======
+import Inicio from "../components/Inicio.vue";
+>>>>>>> cb6ed0e291bcf828f56f9ff73e4cc113711979ab
 
 const routes = [
   {
     path: "/",
+<<<<<<< HEAD
     component: DashboardLayout,
     redirect: "/admin/overview",
   },
@@ -77,4 +82,11 @@ function view(name) {
    return res;
 };**/
 
+=======
+    component: Inicio,
+    redirect: "/incio",
+  },
+];
+
+>>>>>>> cb6ed0e291bcf828f56f9ff73e4cc113711979ab
 export default routes;

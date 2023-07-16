@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
+<<<<<<< HEAD
 
 // Importa e instala el plugin SidebarPlugin
 import SidebarPlugin from "./components/SidebarPlugin/index";
@@ -19,6 +20,14 @@ app.use(LightBootstrap);
 const router = createRouter({
   history: createWebHistory(),
   routes, // short for routes: routes
+=======
+import routes from "./routes/routes";
+
+// Usar VueRouter
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+>>>>>>> cb6ed0e291bcf828f56f9ff73e4cc113711979ab
   linkActiveClass: "nav-item active",
   scrollBehavior: (to) => {
     if (to.hash) {
@@ -29,7 +38,17 @@ const router = createRouter({
   },
 });
 
+<<<<<<< HEAD
 app.use(router);
 
 /* eslint-disable no-new */
+=======
+// Crea la instancia de la aplicación
+const app = createApp(App);
+
+// Usa VueRouter
+app.use(router);
+
+// Monta la aplicación en el elemento con el ID "app"
+>>>>>>> cb6ed0e291bcf828f56f9ff73e4cc113711979ab
 app.mount("#app");

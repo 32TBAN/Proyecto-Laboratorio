@@ -25,7 +25,7 @@ pnpm-debug.log*
 git add .
 git commit -m "version 0.0.9"
 git push -u origin main 
-
+git pull origin main -- > si no vale
 
 
 git log --> para ver quien hizo los push
