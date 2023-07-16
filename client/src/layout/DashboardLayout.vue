@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <side-bar>
+    <side-bar :showSidebar="showSidebar">
       <mobile-menu></mobile-menu>
       <sidebar-link to="/admin/overview">
         <i class="nc-icon nc-chart-pie-35"></i>
@@ -48,6 +48,7 @@
   </div>
 </template>
 <style lang="scss"></style>
+
 <script>
 import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
@@ -60,11 +61,14 @@ export default {
     DashboardContent,
     MobileMenu,
   },
+  data() {
+    return {
+      showSidebar: false,
+    };
+  },
   methods: {
     toggleSidebar() {
-      if (this.$sidebar.showSidebar) {
-        this.$sidebar.displaySidebar(false);
-      }
+      this.showSidebar = !this.showSidebar;
     },
   },
 };

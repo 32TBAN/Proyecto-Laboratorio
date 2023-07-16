@@ -8,6 +8,7 @@
     </a>
   </component>
 </template>
+
 <script>
 export default {
   inheritAttrs: false,
@@ -34,15 +35,14 @@ export default {
   },
   methods: {
     hideSidebar() {
-      if (
-        this.autoClose &&
-        this.$sidebar &&
-        this.$sidebar.showSidebar === true
-      ) {
-        this.$sidebar.displaySidebar(false);
+      if (this.autoClose && this.showSidebar === true) {
+        this.displaySidebar(false);
       }
     },
   },
 };
 </script>
-<style></style>
+
+<style>
+/* Estilos, si es necesario */
+</style>

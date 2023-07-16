@@ -4,10 +4,6 @@ import BaseRadio from "./components/Inputs/BaseRadio.vue";
 import BaseDropdown from "./components/BaseDropdown.vue";
 import CardVue from "./components/Cards/Card.vue";
 
-/**
- * You can register global components here and use them as a plugin in your main Vue instance
- */
-
 const GlobalComponents = {
   install(Vue) {
     Vue.component(BaseInput.name, BaseInput);

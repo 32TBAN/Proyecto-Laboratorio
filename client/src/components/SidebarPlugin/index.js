@@ -18,13 +18,12 @@ const SidebarStore = {
 
 const SidebarPlugin = {
   install(app) {
+    
     app.mixin({
       created() {
         this.sidebarStore = SidebarStore;
       },
     });
-
-    // No es necesario acceder a $root, solo usa this.sidebarStore directamente
 
     app.component("side-bar", Sidebar);
     app.component("sidebar-link", SidebarLink);

@@ -1,4 +1,4 @@
-<template>
+<template>columns
   <table class="table">
     <thead>
       <tr>

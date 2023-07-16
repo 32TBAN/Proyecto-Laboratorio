@@ -1,16 +1,18 @@
 <template>
-<<<<<<< HEAD
-  <div :class="{ 'nav-open': $sidebar.showSidebar }">
+  <div :class="{ 'nav-open': showSidebar }">
     <notifications></notifications>
     <router-view></router-view>
   </div>
-=======
-  <router-view></router-view>
->>>>>>> cb6ed0e291bcf828f56f9ff73e4cc113711979ab
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      showSidebar: false,
+    };
+  },
+};
 </script>
 
 <style lang="scss">
