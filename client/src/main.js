@@ -1,20 +1,35 @@
 import { createApp } from "vue";
+import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 
-import { createRouter, createWebHistory } from "vue-router";
-import Inicio from "./components/Inicio.vue";
-import RegistroPacientes from "./components/RegistroPaciente.vue";
-import Buscar from "./components/ListaPacientes.vue";
-import Laboratorio from "./components/ListaExamenes.vue";
+// Importa e instala el plugin SidebarPlugin
+import SidebarPlugin from "./components/SidebarPlugin/index";
+// LightBootstrap plugin
+import LightBootstrap from "./light-bootstrap-main";
+import routes from "./routes/routes";
 
+import "./registerServiceWorker";
+
+const app = createApp(App);
+
+app.use(SidebarPlugin);
+app.use(LightBootstrap);
+
+// configure router
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    { path: "/", component: Inicio },
-    { path: "/registro-pacientes", component: RegistroPacientes },
-    { path: "/buscar", component: Buscar },
-    { path: "/laboratorio", component: Laboratorio },
-  ],
+  routes, // short for routes: routes
+  linkActiveClass: "nav-item active",
+  scrollBehavior: (to) => {
+    if (to.hash) {
+      return { selector: to.hash };
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
 });
 
-createApp(App).use(router).mount("#app");
+app.use(router);
+
+/* eslint-disable no-new */
+app.mount("#app");
