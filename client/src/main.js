@@ -1,32 +1,17 @@
 import { createApp } from "vue";
-import { createRouter, createWebHistory } from "vue-router";
+import { createPinia } from "pinia";
 import App from "./App.vue";
-import routes from "./routes/routes";
-import SidebarPlugin from "./components/SidebarPlugin/index";
-import StatsCard from "./components/Cards/StatsCard.vue";
-import ChartCard from "./components/Cards/ChartCard.vue";
-import LTable from "./components/Table.vue";
+import router from "./router";
+
+// Nucleo Icons
+import "./assets/css/nucleo-icons.css";
+import "./assets/css/nucleo-svg.css";
+
+import materialKit from "./material-kit";
 
 const app = createApp(App);
-app.use(SidebarPlugin);
 
-// Usa VueRouter
-app.component("LTable", LTable);
-app.component("StatsCard", StatsCard);
-app.component("ChartCard", ChartCard);
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  linkActiveClass: "nav-item active",
-  scrollBehavior: (to) => {
-    if (to.hash) {
-      return { selector: to.hash };
-    } else {
-      return { x: 0, y: 0 };
-    }
-  },
-});
+app.use(createPinia());
 app.use(router);
-
+app.use(materialKit);
 app.mount("#app");
