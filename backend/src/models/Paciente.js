@@ -6,7 +6,8 @@ const paciente = new Schema({
   Apellido: String,
   Genero: String,
   FechaNac: Date,
+  Email: String,
+  Pass: String,
 });
 
 module.exports = model("Paciente", paciente);
-//estado base examenes

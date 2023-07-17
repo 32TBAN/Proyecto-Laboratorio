@@ -21,13 +21,13 @@ onMounted(() => {
 </script>
 <template>
   <BaseLayout
-    title="Page Headers"
+    title="Registro de Laboratorio Clínico"
     :breadcrumb="[
-      { label: 'Page Sections', route: '/sections/page-sections/page-headers' },
-      { label: 'Page Headers' },
+      { label: 'Pacientes', route: '/sections/page-sections/page-headers' },
+      { label: 'Registro' },
     ]"
   >
-    <View title="Header 1" :code="header1Code" id="header-1">
+    <View title="" :code="header1Code" id="header-1">
       <HeaderOne />
     </View>
   </BaseLayout>

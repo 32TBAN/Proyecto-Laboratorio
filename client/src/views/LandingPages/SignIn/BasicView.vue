@@ -15,6 +15,50 @@ import setMaterialInput from "@/assets/js/material-input";
 onMounted(() => {
   setMaterialInput();
 });
+
+import { ref } from "vue";
+import { useStore } from "vuex";
+
+const email = ref("");
+const password = ref("");
+const store = useStore();
+
+const iniciarSesion = () => {
+  console.log(email);
+  console.log(password);
+
+  const emailValue = email.value;
+  const passwordValue = password.value;
+
+  console.log(emailValue);
+  console.log(passwordValue);
+
+  fetch(
+    `http://localhost:3001/buscarPacienteEmail/steven@gmail.com?password=1234`
+  )
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else if (res.status === 404) {
+        return Promise.reject(new Error("Email no encontrado"));
+      } else if (res.status === 401) {
+        return Promise.reject(new Error("Contraseña incorrecta"));
+      } else {
+        return Promise.reject(new Error("Error en el servidor"));
+      }
+    })
+    .then((paciente) => {
+      store.commit("setEmail", emailValue);
+      store.commit("setPassword", passwordValue);
+
+      console.log(paciente);
+      //window.location.href = "http://localhost:3000/";
+    })
+    .catch((error) => {
+      console.error("Error al iniciar sesión:", error.message);
+      // Mostrar mensaje de error en el cliente o realizar alguna otra acción
+    });
+};
 </script>
 <template>
   <DefaultNavbar transparent />
@@ -23,7 +67,7 @@ onMounted(() => {
       class="page-header align-items-start min-vh-100"
       :style="{
         backgroundImage:
-          'url(https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80)'
+          'url(https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80)',
       }"
       loading="lazy"
     >
@@ -41,7 +85,7 @@ onMounted(() => {
                   <h4
                     class="text-white font-weight-bolder text-center mt-2 mb-0"
                   >
-                    Sign in
+                    Iniciar sesión
                   </h4>
                   <div class="row mt-3">
                     <div class="col-2 text-center ms-auto">
@@ -73,7 +117,7 @@ onMounted(() => {
                   <MaterialInput
                     id="password"
                     class="input-group-outline mb-3"
-                    :label="{ text: 'Password', class: 'form-label' }"
+                    :label="{ text: 'Contraseña', class: 'form-label' }"
                     type="password"
                   />
                   <MaterialSwitch
@@ -81,7 +125,7 @@ onMounted(() => {
                     id="rememberMe"
                     labelClass="mb-0 ms-3"
                     checked
-                    >Remember me</MaterialSwitch
+                    >Recordar</MaterialSwitch
                   >
 
                   <div class="text-center">
@@ -90,15 +134,16 @@ onMounted(() => {
                       variant="gradient"
                       color="success"
                       fullWidth
-                      >Sign in</MaterialButton
+                      @click="iniciarSesion"
+                      >INICIAR</MaterialButton
                     >
                   </div>
                   <p class="mt-4 text-sm text-center">
-                    Don't have an account?
+                    Olvido su contraseña?
                     <a
                       href="#"
                       class="text-success text-gradient font-weight-bold"
-                      >Sign up</a
+                      >recordar</a
                     >
                   </p>
                 </form>

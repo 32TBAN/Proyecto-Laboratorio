@@ -9,8 +9,8 @@ require("./database"); //ver database donde se encuentra todo
 
 app.use("/", require("./routes/index"));
 
-app.listen(3000, () => {
-  console.log("Puerto 3000");
+app.listen(3001, () => {
+  console.log("Puerto 3001");
 });
 
 // node src\index.js

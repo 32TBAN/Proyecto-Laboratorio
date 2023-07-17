@@ -23,7 +23,7 @@ defineProps({
           <Breadcrumbs :routes="breadcrumb" />
           <h3>{{ title }}</h3>
         </div>
-        <!--  -->
+
         <slot />
       </div>
     </div>
