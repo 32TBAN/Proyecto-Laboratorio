@@ -28,7 +28,7 @@ onMounted(() => {
           :action="{
             route: 'https://www.creative-tim.com/product/vue-material-kit-pro',
             color: 'bg-gradient-success',
-            label: 'Buy Now',
+            label: 'Doctor',
           }"
         />
       </div>
@@ -62,15 +62,11 @@ onMounted(() => {
                 <div
                   class="bg-gradient-success shadow-success border-radius-lg p-3"
                 >
-                  <h3 class="text-white text-success mb-0">Contact us</h3>
+                  <h3 class="text-white text-success mb-0">Covid-Antígenos</h3>
                 </div>
               </div>
               <div class="card-body">
-                <p class="pb-3">
-                  For further questions, including partnership opportunities,
-                  please email hello@creative-tim.com or contact using our
-                  contact form.
-                </p>
+                <p class="pb-3">Registro del exámen de Covid-Antígenos</p>
                 <form id="contact-form" method="post" autocomplete="off">
                   <div class="card-body p-0 my-3">
                     <div class="row">
@@ -78,16 +74,32 @@ onMounted(() => {
                         <MaterialInput
                           class="input-group-static mb-4"
                           type="text"
-                          label="Full Name"
-                          placeholder="Full Name"
+                          label="Nombre del exámen"
+                          placeholder="Nombre"
                         />
                       </div>
                       <div class="col-md-6 ps-md-2">
                         <MaterialInput
                           class="input-group-static mb-4"
-                          type="email"
-                          label="Email"
-                          placeholder="hello@creative-tim.com"
+                          type="text"
+                          label="Sintomas"
+                          placeholder="Síntomas"
+                        />
+                      </div>
+                      <div class="col-md-6 ps-md-2">
+                        <MaterialInput
+                          class="input-group-static mb-4"
+                          type="number"
+                          label="Pulsaciones"
+                          placeholder="Pulsaciones"
+                        />
+                      </div>
+                      <div class="col-md-6 ps-md-2">
+                        <MaterialInput
+                          class="input-group-static mb-4"
+                          type="number"
+                          label="Resultado Total"
+                          placeholder="Resultado Total"
                         />
                       </div>
                     </div>
@@ -95,9 +107,9 @@ onMounted(() => {
                       <MaterialTextArea
                         id="message"
                         class="input-group-static mb-4"
-                        :rows="6"
-                        placeholder="Describe your problem in at least 250 characters"
-                        >How can we help you?</MaterialTextArea
+                        :rows="8"
+                        placeholder="Descripción del exámen"
+                        >Descripción del exámen</MaterialTextArea
                       >
                     </div>
                     <div class="row">
@@ -106,7 +118,7 @@ onMounted(() => {
                           variant="gradient"
                           color="success"
                           class="mt-3 mb-0"
-                          >Send Message</MaterialButton
+                          >Guardar Resultados</MaterialButton
                         >
                       </div>
                     </div>

@@ -1,65 +1,3 @@
-<script setup>
-import { onMounted } from "vue";
-
-// example components
-import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
-import Header from "@/examples/Header.vue";
-
-//Vue Material Kit 2 components
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialSwitch from "@/components/MaterialSwitch.vue";
-import MaterialButton from "@/components/MaterialButton.vue";
-
-// material-input
-import setMaterialInput from "@/assets/js/material-input";
-onMounted(() => {
-  setMaterialInput();
-});
-
-import { ref } from "vue";
-import { useStore } from "vuex";
-
-const email = ref("");
-const password = ref("");
-const store = useStore();
-
-const iniciarSesion = () => {
-  console.log(email);
-  console.log(password);
-
-  const emailValue = email.value;
-  const passwordValue = password.value;
-
-  console.log(emailValue);
-  console.log(passwordValue);
-
-  fetch(
-    `http://localhost:3001/buscarPacienteEmail/steven@gmail.com?password=1234`
-  )
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else if (res.status === 404) {
-        return Promise.reject(new Error("Email no encontrado"));
-      } else if (res.status === 401) {
-        return Promise.reject(new Error("Contraseña incorrecta"));
-      } else {
-        return Promise.reject(new Error("Error en el servidor"));
-      }
-    })
-    .then((paciente) => {
-      store.commit("setEmail", emailValue);
-      store.commit("setPassword", passwordValue);
-
-      console.log(paciente);
-      //window.location.href = "http://localhost:3000/";
-    })
-    .catch((error) => {
-      console.error("Error al iniciar sesión:", error.message);
-      // Mostrar mensaje de error en el cliente o realizar alguna otra acción
-    });
-};
-</script>
 <template>
   <DefaultNavbar transparent />
   <Header>
@@ -108,18 +46,19 @@ const iniciarSesion = () => {
               </div>
               <div class="card-body">
                 <form role="form" class="text-start">
-                  <MaterialInput
-                    id="email"
-                    class="input-group-outline my-3"
-                    :label="{ text: 'Email', class: 'form-label' }"
+                  <input
                     type="email"
+                    placeholder="Email"
+                    v-model="email"
+                    class="form-control custom-input"
                   />
-                  <MaterialInput
-                    id="password"
-                    class="input-group-outline mb-3"
-                    :label="{ text: 'Contraseña', class: 'form-label' }"
+                  <input
                     type="password"
+                    placeholder="Contraseña"
+                    v-model="password"
+                    class="form-control custom-input"
                   />
+
                   <MaterialSwitch
                     class="d-flex align-items-center mb-3"
                     id="rememberMe"
@@ -214,3 +153,73 @@ const iniciarSesion = () => {
     </div>
   </Header>
 </template>
+<script setup>
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+// example components
+import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
+import Header from "@/examples/Header.vue";
+
+//Vue Material Kit 2 components
+import MaterialSwitch from "@/components/MaterialSwitch.vue";
+import MaterialButton from "@/components/MaterialButton.vue";
+
+import setMaterialInput from "@/assets/js/material-input";
+onMounted(() => {
+  setMaterialInput();
+});
+
+const email = ref("");
+const password = ref("");
+
+const iniciarSesion = (e) => {
+  e.preventDefault();
+
+  fetch(
+    `http://localhost:3001/buscarPacienteEmail/${email.value}?password=${password.value}`
+  )
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else if (res.status === 404) {
+        return Promise.reject(new Error("Email no encontrado"));
+      } else if (res.status === 401) {
+        return Promise.reject(new Error("Contraseña incorrecta"));
+      } else {
+        return Promise.reject(new Error("Error en el servidor"));
+      }
+    })
+    .then((paciente) => {
+      console.log(paciente);
+      store.dispatch("setPaciente", paciente.Email);
+      window.location.href = "http://localhost:3000/";
+    })
+    .catch((error) => {
+      console.error("Error al iniciar sesión:", error.message);
+    });
+};
+</script>
+<style>
+/* Estilos personalizados para los campos de input */
+.custom-input {
+  background-color: #f2f2f2;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.custom-input::placeholder {
+  color: #999999;
+}
+</style>

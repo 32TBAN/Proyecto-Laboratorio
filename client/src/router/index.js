@@ -23,6 +23,8 @@ import ElDropdowns from "../layouts/sections/elements/dropdowns/DropdownsView.vu
 import ElProgressBars from "../layouts/sections/elements/progress-bars/ProgressBarsView.vue";
 import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
+import store from "../store";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -30,6 +32,7 @@ const router = createRouter({
       path: "/",
       name: "presentation",
       component: PresentationView,
+      props: true,
     },
     {
       path: "/pages/landing-pages/about-us",
@@ -147,6 +150,13 @@ const router = createRouter({
       component: ElTypography,
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name === "signin-basic" && store.getters.getPaciente) {
+    store.dispatch("setPaciente", store.getters.getPaciente);
+  }
+  next();
 });
 
 export default router;

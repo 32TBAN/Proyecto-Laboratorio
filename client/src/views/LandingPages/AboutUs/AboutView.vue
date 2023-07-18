@@ -1,104 +1,137 @@
 <script setup>
-import { onMounted, onUnmounted } from "vue";
+import { onMounted } from "vue";
 
 //example components
-import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
-import DefaultFooter from "../../../examples/footers/FooterDefault.vue";
+import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
+import DefaultFooter from "@/examples/footers/FooterDefault.vue";
 
 //image
-import bg0 from "@/assets/img/bg9.jpg";
+import image from "@/assets/img/illustrations/illustration-signin.jpg";
 
-//dep
-import Typed from "typed.js";
+//material components
+import MaterialInput from "@/components/MaterialInput.vue";
+import MaterialTextArea from "@/components/MaterialTextArea.vue";
+import MaterialButton from "@/components/MaterialButton.vue";
 
-//sections
-import Information from "./Sections/AboutInformation.vue";
-import AboutTeam from "./Sections/AboutTeam.vue";
-import Featuring from "./Sections/AboutFeaturing.vue";
-import Newsletter from "./Sections/AboutNewsletter.vue";
-
-const body = document.getElementsByTagName("body")[0];
-//hooks
+// material-input
+import setMaterialInput from "@/assets/js/material-input";
 onMounted(() => {
-  body.classList.add("about-us");
-  body.classList.add("bg-gray-200");
-
-  if (document.getElementById("typed")) {
-    // eslint-disable-next-line no-unused-vars
-    var typed = new Typed("#typed", {
-      stringsElement: "#typed-strings",
-      typeSpeed: 90,
-      backSpeed: 90,
-      backDelay: 200,
-      startDelay: 500,
-      loop: true,
-    });
-  }
-});
-
-onUnmounted(() => {
-  body.classList.remove("about-us");
-  body.classList.remove("bg-gray-200");
+  setMaterialInput();
 });
 </script>
 <template>
-  <DefaultNavbar
-    :action="{
-      route: 'javascript:;',
-      label: 'Buy Now',
-      color: 'btn-white',
-    }"
-    transparent
-  />
-  <header class="bg-gradient-dark">
-    <div
-      class="page-header min-vh-75"
-      :style="{ backgroundImage: `url(${bg0})` }"
-    >
-      <span class="mask bg-gradient-dark opacity-6"></span>
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <DefaultNavbar
+          :sticky="true"
+          :action="{
+            route: 'https://www.creative-tim.com/product/vue-material-kit-pro',
+            color: 'bg-gradient-success',
+            label: 'Doctor',
+          }"
+        />
+      </div>
+    </div>
+  </div>
+  <section>
+    <div class="page-header min-vh-100">
       <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center mx-auto my-auto">
-            <h1 class="text-white">
-              Work with an amazing <span class="text-white" id="typed"></span>
-            </h1>
-            <div id="typed-strings">
-              <h1>team</h1>
-              <h1>design</h1>
-              <h1>tool</h1>
-            </div>
-            <p class="lead mb-4 text-white opacity-8">
-              We’re constantly trying to express ourselves and actualize our
-              dreams. If you have the opportunity to play this game
-            </p>
-            <button type="submit" class="btn bg-white text-dark">
-              Create Account
-            </button>
-            <h6 class="text-white mb-2 mt-5">Find us on</h6>
-            <div class="d-flex justify-content-center">
-              <a href="javascript:;"
-                ><i class="fab fa-facebook text-lg text-white me-4"></i
-              ></a>
-              <a href="javascript:;"
-                ><i class="fab fa-instagram text-lg text-white me-4"></i
-              ></a>
-              <a href="javascript:;"
-                ><i class="fab fa-twitter text-lg text-white me-4"></i
-              ></a>
-              <a href="javascript:;"
-                ><i class="fab fa-google-plus text-lg text-white"></i
-              ></a>
+        <div class="row">
+          <div
+            class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column"
+          >
+            <div
+              class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
+              :style="{
+                backgroundImage: `url(${image})`,
+                backgroundSize: 'cover',
+              }"
+              loading="lazy"
+            ></div>
+          </div>
+          <div
+            class="mt-8 col-xl-5 col-lg-6 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5"
+          >
+            <div
+              class="card d-flex blur justify-content-center shadow-lg my-sm-0 my-sm-6 mt-8 mb-5"
+            >
+              <div
+                class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent"
+              >
+                <div
+                  class="bg-gradient-success shadow-success border-radius-lg p-3"
+                >
+                  <h3 class="text-white text-success mb-0">Covid-Hisopados</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="pb-3">
+                  Registro del exámen de Covid-Hisopados
+                </p>
+                <form id="contact-form" method="post" autocomplete="off">
+                  <div class="card-body p-0 my-3">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <MaterialInput
+                          class="input-group-static mb-4"
+                          type="text"
+                          label="Nombre"
+                          placeholder="Nombre"
+                        />
+                      </div>
+                      <div class="col-md-6 ps-md-2">
+                        <MaterialInput
+                          class="input-group-static mb-4"
+                          type="number"
+                          label="Número Positivo"
+                          placeholder="Número Positivo"
+                        />
+                      </div>
+                      <div class="col-md-6 ps-md-2">
+                        <MaterialInput
+                          class="input-group-static mb-4"
+                          type="number"
+                          label="Número Negativo"
+                          placeholder="Número Negativo"
+                        />
+                      </div>
+                      <div class="col-md-6 ps-md-2">
+                        <MaterialInput
+                          class="input-group-static mb-4"
+                          type="number"
+                          label="Resultado Total"
+                          placeholder="Resultado Total"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group mb-0 mt-md-0 mt-4">
+                      <MaterialTextArea
+                        id="message"
+                        class="input-group-static mb-4"
+                        :rows="8"
+                        placeholder="Descripción del exámen"
+                        >Descripción del exámen</MaterialTextArea
+                      >
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <MaterialButton
+                          variant="gradient"
+                          color="success"
+                          class="mt-3 mb-0"
+                          >Guardar Resultados</MaterialButton
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </header>
-  <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
-    <Information />
-    <AboutTeam />
-    <Featuring />
-    <Newsletter />
-  </div>
+  </section>
   <DefaultFooter />
 </template>
