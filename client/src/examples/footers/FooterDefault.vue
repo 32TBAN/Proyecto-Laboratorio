@@ -7,10 +7,10 @@ defineProps({
     logo: String,
     route: "",
     default: () => ({
-      name: "Material Kit 2",
+      name: "Laboratorio",
       logo: logoDark,
-      route: "/"
-    })
+      route: "/",
+    }),
   },
   socials: {
     type: Array,
@@ -19,25 +19,25 @@ defineProps({
     default: () => [
       {
         icon: '<i class="fab fa-facebook text-lg opacity-8"></i>',
-        link: "https://www.facebook.com/CreativeTim/"
+        link: "https://www.facebook.com",
       },
       {
         icon: '<i class="fab fa-twitter text-lg opacity-8"></i>',
-        link: "https://twitter.com/creativetim"
+        link: "https://twitter.com",
       },
       {
         icon: '<i class="fab fa-dribbble text-lg opacity-8"></i>',
-        link: "https://dribbble.com/creativetim"
+        link: "https://dribbble.com",
       },
       {
         icon: '<i class="fab fa-github text-lg opacity-8"></i>',
-        link: "https://github.com/creativetimofficial"
+        link: "https://github.com",
       },
       {
         icon: '<i class="fab fa-youtube text-lg opacity-8"></i>',
-        link: "https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w"
-      }
-    ]
+        link: "https://www.youtube.com",
+      },
+    ],
   },
   menus: {
     type: Array,
@@ -45,7 +45,7 @@ defineProps({
     items: {
       type: Array,
       name: String,
-      href: String
+      href: String,
     },
     default: () => [
       {
@@ -53,73 +53,59 @@ defineProps({
         items: [
           {
             name: "about us",
-            href: "https://www.creative-tim.com/presentation"
+            href: "",
           },
           {
             name: "freebies",
-            href: "https://www.creative-tim.com/templates/free"
+            href: "",
           },
           {
             name: "premium tools",
-            href: "https://www.creative-tim.com/templates/premium"
+            href: "",
           },
-          { name: "blog", href: "https://www.creative-tim.com/blog" }
-        ]
-      },
-      {
-        name: "resources",
-        items: [
-          { name: "illustrations", href: "https://iradesign.io/" },
-          {
-            name: "bits & snippets",
-            href: "https://www.creative-tim.com/bits"
-          },
-          {
-            name: "affiliate program",
-            href: "https://www.creative-tim.com/affiliates/new"
-          }
-        ]
+          { name: "blog", href: "" },
+        ],
       },
       {
         name: "help & support",
         items: [
           {
             name: "contact us",
-            href: "https://www.creative-tim.com/contact-us"
+            href: "https://www.creative-tim.com/contact-us",
           },
           {
             name: "knowledge center",
-            href: "https://www.creative-tim.com/knowledge-center"
+            href: "https://www.creative-tim.com/knowledge-center",
           },
           {
             name: "custom development",
-            href: "https://services.creative-tim.com/"
+            href: "https://services.creative-tim.com/",
           },
           {
             name: "sponsorships",
-            href: "https://www.creative-tim.com/sponsorships"
-          }
-        ]
+            href: "https://www.creative-tim.com/sponsorships",
+          },
+        ],
       },
       {
         name: "legal",
         items: [
           {
             name: "terms & conditions",
-            href: "https://www.creative-tim.com/terms"
+            href: "https://www.creative-tim.com/terms",
           },
           {
             name: "privacy policy",
-            href: "https://www.creative-tim.com/privacy"
+            href: "https://www.creative-tim.com/privacy",
           },
           {
             name: "licenses (EULA)",
-            href: "https://www.creative-tim.com/license"
-          }
-        ]
-      }
-    ]
-  }
+            href: "https://www.creative-tim.com/license",
+          },
+        ],
+      },
+    ],
+  },
 });
 </script>
 <template>
@@ -169,12 +155,10 @@ defineProps({
         <div class="col-12">
           <div class="text-center">
             <p class="text-dark my-4 text-sm font-weight-normal">
-              All rights reserved. Copyright ©
+              Todos los derechos reservados. Copyright ©
               {{ new Date().getFullYear() }}
-              Material Kit by
-              <a href="https://www.creative-tim.com" target="_blank"
-                >Creative Tim</a
-              >.
+              Laboratorio
+              <a href="https://www.creative-tim.com" target="_blank">TDW</a>
             </p>
           </div>
         </div>

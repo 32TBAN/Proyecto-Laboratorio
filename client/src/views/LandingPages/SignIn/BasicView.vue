@@ -66,7 +66,6 @@
                     checked
                     >Recordar</MaterialSwitch
                   >
-
                   <div class="text-center">
                     <MaterialButton
                       class="my-4 mb-2"
@@ -155,10 +154,7 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
-import { useStore } from "vuex";
 
-const store = useStore();
-// example components
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
 import Header from "@/examples/Header.vue";
 
@@ -180,24 +176,31 @@ const iniciarSesion = (e) => {
   fetch(
     `http://localhost:3001/buscarPacienteEmail/${email.value}?password=${password.value}`
   )
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else if (res.status === 404) {
-        return Promise.reject(new Error("Email no encontrado"));
-      } else if (res.status === 401) {
-        return Promise.reject(new Error("Contraseña incorrecta"));
-      } else {
-        return Promise.reject(new Error("Error en el servidor"));
-      }
-    })
+    .then((res) => res.json())
     .then((paciente) => {
       console.log(paciente);
-      store.dispatch("setPaciente", paciente.Email);
-      window.location.href = "http://localhost:3000/";
-    })
-    .catch((error) => {
-      console.error("Error al iniciar sesión:", error.message);
+      if (paciente == null) {
+        fetch(
+          `http://localhost:3001/buscarDoctorEmail/${email.value}?password=${password.value}`
+        )
+          .then((res) => res.json())
+          .then((doctor) => {
+            doctor.Tipo = "Doctor";
+
+            console.log(doctor);
+
+            sessionStorage.setItem("datosInicio", JSON.stringify(doctor));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        paciente.Tipo = "Paciente";
+        sessionStorage.setItem("datosInicio", JSON.stringify(paciente));
+        console.log(sessionStorage.getItem("datosInicio"));
+      }
+      console.log(sessionStorage.getItem("datosInicio"));
+      window.location.href = "http://localhost:3000/pages/inicio";
     });
 };
 </script>

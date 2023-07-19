@@ -1,12 +1,11 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 //example components
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
 import DefaultFooter from "@/examples/footers/FooterDefault.vue";
 
 //image
-import image from "@/assets/img/illustrations/illustration-signin.jpg";
 
 //material components
 import MaterialInput from "@/components/MaterialInput.vue";
@@ -14,11 +13,26 @@ import MaterialTextArea from "@/components/MaterialTextArea.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
 
 // material-input
-import setMaterialInput from "@/assets/js/material-input";
+const tipo = JSON.parse(sessionStorage.getItem("datosInicio")).Tipo;
+
+const examenes = ref([]);
+
 onMounted(() => {
-  setMaterialInput();
+  fetch("http://localhost:3001/examenes")
+    .then((response) => response.json())
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].Tipo == "Covid" && data[i].Revisado == false) {
+          examenes.value.push(data[i]);
+        }
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
 </script>
+
 <template>
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
@@ -26,9 +40,9 @@ onMounted(() => {
         <DefaultNavbar
           :sticky="true"
           :action="{
-            route: 'https://www.creative-tim.com/product/vue-material-kit-pro',
+            route: 'http://localhost:3000/',
             color: 'bg-gradient-success',
-            label: 'Doctor',
+            label: tipo,
           }"
         />
       </div>
@@ -41,14 +55,37 @@ onMounted(() => {
           <div
             class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column"
           >
-            <div
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Fecha Envio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="examen in examenes"
+                    :key="examen._id"
+                    @click="selectExamen(examen._id)"
+                    :class="{ 'table-primary': selectedExamen === examen._id }"
+                  >
+                    <td>{{ examen._id }}</td>
+                    <td>{{ examen.Tipo }}</td>
+                    <td>{{ examen.FechaInicio }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div
               class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
               :style="{
                 backgroundImage: `url(${image})`,
                 backgroundSize: 'cover',
               }"
               loading="lazy"
-            ></div>
+            ></div> -->
           </div>
           <div
             class="mt-8 col-xl-5 col-lg-6 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5"
@@ -66,26 +103,18 @@ onMounted(() => {
                 </div>
               </div>
               <div class="card-body">
-                <p class="pb-3">
-                  Registro del exámen de Covid-Hisopados
-                </p>
+                <p class="pb-3">Registro del exámen de Covid-Hisopados</p>
+                <p class="text-black mb-0">{{ selectedExamen }}</p>
                 <form id="contact-form" method="post" autocomplete="off">
                   <div class="card-body p-0 my-3">
                     <div class="row">
-                      <div class="col-md-6">
-                        <MaterialInput
-                          class="input-group-static mb-4"
-                          type="text"
-                          label="Nombre"
-                          placeholder="Nombre"
-                        />
-                      </div>
                       <div class="col-md-6 ps-md-2">
                         <MaterialInput
                           class="input-group-static mb-4"
                           type="number"
                           label="Número Positivo"
                           placeholder="Número Positivo"
+                          v-model="numeroPositivo"
                         />
                       </div>
                       <div class="col-md-6 ps-md-2">
@@ -94,6 +123,7 @@ onMounted(() => {
                           type="number"
                           label="Número Negativo"
                           placeholder="Número Negativo"
+                          v-model="numeroNegativo"
                         />
                       </div>
                       <div class="col-md-6 ps-md-2">
@@ -102,6 +132,7 @@ onMounted(() => {
                           type="number"
                           label="Resultado Total"
                           placeholder="Resultado Total"
+                          v-model="resultadoTotal"
                         />
                       </div>
                     </div>
@@ -111,6 +142,7 @@ onMounted(() => {
                         class="input-group-static mb-4"
                         :rows="8"
                         placeholder="Descripción del exámen"
+                        v-model="descripcion"
                         >Descripción del exámen</MaterialTextArea
                       >
                     </div>
@@ -120,6 +152,7 @@ onMounted(() => {
                           variant="gradient"
                           color="success"
                           class="mt-3 mb-0"
+                          @click="actualizarExamen"
                           >Guardar Resultados</MaterialButton
                         >
                       </div>
@@ -135,3 +168,62 @@ onMounted(() => {
   </section>
   <DefaultFooter />
 </template>
+<script>
+export default {
+  data() {
+    return {
+      examenes: [],
+      selectedExamen: "", // Variable reactiva para almacenar el ID del examen seleccionado
+    };
+  },
+  methods: {
+    selectExamen(examenId) {
+      this.selectedExamen = examenId;
+    },
+    async actualizarExamen(e) {
+      e.preventDefault();
+      const examenId = this.selectedExamen; // Obtén el ID del examen seleccionado
+      const numeroPositivo = this.numeroPositivo; // Obtén el número positivo ingresado
+      const numeroNegativo = this.numeroNegativo; // Obtén el número negativo ingresado
+      const resultadoTotal = this.resultadoTotal; // Obtén el resultado total ingresado
+      const descripcion = this.descripcion; // Obtén la descripción ingresada
+
+      var today = new Date();
+      const actualizacion = {
+        NumeroPositivo: numeroPositivo,
+        NumeroNegativo: numeroNegativo,
+        ResultadoTotal: resultadoTotal,
+        Descripcion: descripcion,
+        FechaFin: today.toLocaleString(),
+        Revisado: true,
+      };
+
+      try {
+        const response = await fetch(
+          `http://localhost:3001/actualizarExamen/${examenId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(actualizacion),
+          }
+        );
+
+        if (response.ok) {
+          // Actualización exitosa
+          // Puedes realizar cualquier acción adicional después de actualizar el examen
+          console.log("Examen actualizado correctamente");
+        } else {
+          // Error al actualizar el examen
+          console.error("Error al actualizar el examen");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // Resto de los métodos
+  },
+  // Resto del código
+};
+</script>

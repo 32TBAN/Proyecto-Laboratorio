@@ -7,7 +7,7 @@ import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
-
+console.log(sessionStorage.getItem("datosInicio"));
 const props = defineProps({
   action: {
     type: Object,
@@ -15,9 +15,12 @@ const props = defineProps({
     color: String,
     label: String,
     default: () => ({
-      route: "https://www.creative-tim.com/product/vue-material-kit",
+      route: "http://localhost:3000/",
       color: "bg-gradient-success",
-      label: "Iniciar sesion",
+      label:
+        sessionStorage.getItem("datosInicio") == null
+          ? "Iniciar Sesion"
+          : JSON.parse(sessionStorage.getItem("datosInicio")).Tipo,
     }),
   },
   transparent: {
@@ -88,6 +91,15 @@ watch(
     }
   }
 );
+
+const userType =
+  sessionStorage.getItem("datosInicio") == null
+    ? null
+    : JSON.parse(sessionStorage.getItem("datosInicio")).Tipo;
+
+const userIsPaciente = userType === "Paciente";
+
+const userIsNotPaciente = !userIsPaciente;
 </script>
 <template>
   <nav
@@ -115,32 +127,13 @@ watch(
             ? 'text-dark font-weight-bolder ms-sm-3'
             : 'text-white font-weight-bolder ms-sm-3',
         ]"
-        :to="{ name: 'presentation' }"
+        :to="{ name: 'signin-basic' }"
         rel="tooltip"
         title="Designed and Coded by Creative Tim"
         data-placement="bottom"
       >
         Laboratorio
       </RouterLink>
-      <RouterLink
-        class="navbar-brand d-block d-md-none"
-        :class="
-          props.transparent || props.dark
-            ? 'text-white'
-            : 'font-weight-bolder ms-sm-3'
-        "
-        to="/"
-        rel="tooltip"
-        title="Designed and Coded by Creative Tim"
-        data-placement="bottom"
-      >
-        Material Design
-      </RouterLink>
-      <a
-        href="https://www.creative-tim.com/product/vue-material-kit-pro"
-        class="btn btn-sm bg-gradient-success mb-0 ms-auto d-lg-none d-block"
-        >Buy Now</a
-      >
       <button
         class="navbar-toggler shadow-none ms-2"
         type="button"
@@ -169,6 +162,7 @@ watch(
               id="dropdownMenuPages"
               data-bs-toggle="dropdown"
               aria-expanded="false"
+              v-if="userIsNotPaciente"
             >
               <i
                 class="material-icons opacity-6 me-2 text-md"
@@ -224,7 +218,7 @@ watch(
                         Cuenta
                       </div>
                       <RouterLink
-                        :to="{ name: 'signin-basic' }"
+                        :to="{ name: 'presentation' }"
                         class="dropdown-item border-radius-md"
                       >
                         <span>Iniciar Sesion</span>

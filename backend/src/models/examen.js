@@ -6,6 +6,10 @@ const examen = new Schema({
   Revisado: Boolean,
   FechaInicio: Date,
   FechaFin: Date,
+  NumPosi: Number,
+  NumNeg: Number,
+  Resul: Number,
+  Descripcion: String,
 });
 
 module.exports = model("Examen", examen);

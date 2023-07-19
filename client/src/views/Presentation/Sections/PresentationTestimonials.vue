@@ -6,42 +6,26 @@ import DefaultReviewCard from "@/examples/cards/reviewCards/DefaultReviewCard.vu
     <div class="container">
       <div class="row">
         <div class="col-lg-6 mx-auto text-center">
-          <h2 class="mb-0">Trusted by over</h2>
+          <h2 class="mb-0">Atención de alta calidad</h2>
           <h2 class="text-gradient text-success mb-3">
-            1,679,477+ web developers
+            1.6000 Usuarios que han generado diversos reportes de atención
+            médica
           </h2>
-          <p class="lead">
-            Many Fortune 500 companies, startups, universities and governmental
-            institutions love Creative Tim's products.
-          </p>
         </div>
       </div>
       <div class="row mt-6">
         <DefaultReviewCard
-          name="Nick Willever"
-          date="1 day ago"
-          review='"This is an excellent product, the documentation is excellent and
-          helped me get things done more efficiently."'
+          name="Steven Carrera"
+          date="1 día antes"
+          review='"Autor del diseño web con la funcionalidad de que un usuario tenga acceso a los reportes y un médico, obtenga la facilidad de realizar un exámen a un paciente en expecífico."'
           :rating="5.0"
         />
         <DefaultReviewCard
           class="ms-md-auto"
           color="bg-gradient-success"
-          name="Shailesh Kushwaha"
-          date="1 week ago"
-          review='"I found solution to all my design needs from Creative Tim. I
-                  use them as a freelancer in my hobby projects for fun! And its
-                  really affordable, very humble guys !!!"'
-          :rating="5.0"
-        />
-
-        <DefaultReviewCard
-          name="Samuel Kamuli"
-          date="3 weeks ago"
-          review='"Great product. Helped me cut the time to set up a site. I
-                  used the components within instead of starting from scratch. I
-                  highly recommend for developers who want to spend more time on
-                  the backend!."'
+          name="Kevin Guanoluisa"
+          date="1 día antes"
+          review='"Programador del sitio web con las funcionalidades necesarias para que el usuario sienta comodidad en navegar por el sitio web y a su vez, identificar cual es el usuario que se ha logeado para lograr vsualizar y presenciar las diveras funcionalidades este aplicativo."'
           :rating="5.0"
         />
       </div>

@@ -61,8 +61,7 @@
           <option value="Covid">Covid</option>
           <option value="Antígenos">Antígenos</option>
           <option value="Hisopado">Hisopado</option>
-          <option value="Examen X">Examen X</option>
-          <option value="Examen Y">Examen Y</option>
+          <option value="Examen X">Otro</option>
         </select>
       </div>
       <div class="col-md-12 text-center">
@@ -95,6 +94,8 @@ export default {
         Apellido: this.apellido,
         Genero: this.genero,
         FechaNac: this.edad,
+        Email: JSON.parse(sessionStorage.getItem("datosInicio")).Email,
+        Pass: JSON.parse(sessionStorage.getItem("datosInicio")).Pass,
       };
 
       var hoy = new Date();
@@ -102,6 +103,7 @@ export default {
         CedulaPaciente: this.cedula,
         Revisado: false,
         FechaInicio: hoy,
+        Tipo: this.examen,
       };
 
       if (!this.siExiste) {
@@ -142,6 +144,7 @@ export default {
       this.genero = "";
       this.edad = "";
       this.examen = "";
+      this.nombre = "";
     },
     existe() {
       if (this.cedula != "") {
